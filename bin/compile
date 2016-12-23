@@ -8,4 +8,5 @@
 
 
 python --version
+which python
 echo "COMPILE"
