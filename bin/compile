@@ -7,6 +7,6 @@
 #
 
 
-python --version
-which python
+pytho3 --version
+which python3
 echo "COMPILE"
