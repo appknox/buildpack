@@ -7,4 +7,5 @@
 #
 
 
+python --version
 echo "COMPILE"
