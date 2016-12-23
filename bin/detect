@@ -6,7 +6,7 @@
 # Distributed under terms of the MIT license.
 #
 
-
+set -eo pipefail
 
 BUILD_DIR=$1
 CACHE_DIR=$2
