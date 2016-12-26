@@ -20,4 +20,5 @@ if (pip-grep -s requirements.txt setuptools distribute &> /dev/null) then
 
 fi
 
-easy_install pip
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
