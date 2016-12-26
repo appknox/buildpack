@@ -114,14 +114,14 @@ fi
 # Install Python.
 source $BIN_DIR/steps/python
 
+# Libffi support.
+source $BIN_DIR/steps/cryptography
+
 # Sanity check for setuptools/distribute.
 source $BIN_DIR/steps/setuptools
 
 # Uninstall removed dependencies with Pip.
 source $BIN_DIR/steps/pip-uninstall
-
-# Libffi support.
-source $BIN_DIR/steps/cryptography
 
 # Install dependencies with Pip (where the magic happens).
 source $BIN_DIR/steps/pip-install
