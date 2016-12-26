@@ -1,0 +1,59 @@
+#! /bin/bash
+#
+# python
+# Copyright (C) 2016 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
+
+
+set +e
+PYTHON_VERSION=$(cat runtime.txt)
+
+# Install Python.
+if [ -f .heroku/python-version ]; then
+  if [ ! $(cat .heroku/python-version) = $PYTHON_VERSION ]; then
+    puts-step "Found $(cat .heroku/python-version), removing"
+    rm -fr .heroku/python
+  else
+    SKIP_INSTALL=1
+  fi
+fi
+
+if [ ! $STACK = $CACHED_PYTHON_STACK ]; then
+  rm -fr .heroku/python .heroku/python-stack .heroku/vendor
+  unset SKIP_INSTALL
+fi
+
+
+if [ ! "$SKIP_INSTALL" ]; then
+  puts-step "Installing $PYTHON_VERSION"
+
+  # Prepare destination directory.
+  mkdir -p .heroku/python
+
+  curl https://lang-python.s3.amazonaws.com/$STACK/runtimes/$PYTHON_VERSION.tar.gz -s | tar zxv -C .heroku/python &> /dev/null
+  if [[ $? != 0 ]] ; then
+    puts-warn "Requested runtime ($PYTHON_VERSION) is not available for this stack ($STACK)."
+    puts-warn "Aborting.  More info: https://devcenter.heroku.com/articles/python-support"
+    exit 1
+  fi
+
+
+  # Record for future reference.
+  echo $PYTHON_VERSION > .heroku/python-version
+  echo $STACK > .heroku/python-stack
+  FRESH_PYTHON=true
+
+  hash -r
+fi
+
+set -e
+hash -r
+
+echo "=========================================================================================================="
+echo "=========================================================================================================="
+echo "=========================================================================================================="
+
+which python
+python --version
