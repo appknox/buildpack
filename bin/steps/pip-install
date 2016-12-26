@@ -20,8 +20,6 @@ set +e
 PIP_STATUS="${PIPESTATUS[0]}"
 set -e
 
-show-warnings
-
 if [[ ! $PIP_STATUS -eq 0 ]]; then
     exit 1
 fi
