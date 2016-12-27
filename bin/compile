@@ -152,13 +152,13 @@ find .heroku/python/lib/python*/site-packages/ -name "*.egg-link" -print0 2> /de
 find .heroku/python/lib/python*/site-packages/ -name "*.pth" -print0 2> /dev/null | xargs -r -0 -n 1 sed -i -e "s#$(pwd)/#/app/#" &> /dev/null
 set -e
 
-# Store new artifacts in cache.
-# rm -rf $CACHE_DIR/.heroku/python
-# rm -rf $CACHE_DIR/.heroku/python-version
-# rm -rf $CACHE_DIR/.heroku/python-stack
-# rm -rf $CACHE_DIR/.heroku/vendor
-# rm -rf $CACHE_DIR/.heroku/venv
-# rm -rf $CACHE_DIR/.heroku/src
+Store new artifacts in cache.
+rm -rf $CACHE_DIR/.heroku/python
+rm -rf $CACHE_DIR/.heroku/python-version
+rm -rf $CACHE_DIR/.heroku/python-stack
+rm -rf $CACHE_DIR/.heroku/vendor
+rm -rf $CACHE_DIR/.heroku/venv
+rm -rf $CACHE_DIR/.heroku/src
 
 mkdir -p $CACHE_DIR/.heroku
 cp -R .heroku/python $CACHE_DIR/.heroku/
