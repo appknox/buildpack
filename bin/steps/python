@@ -8,8 +8,6 @@
 
 
 set +e
-PYTHON_VERSION=$(cat runtime.txt)
-
 # Install Python.
 if [ -f .heroku/python-version ]; then
   if [ ! $(cat .heroku/python-version) = $PYTHON_VERSION ]; then
