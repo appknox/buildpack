@@ -38,6 +38,9 @@ ENV_DIR=$3
 # Static configurations for virtualenv caches.
 PYTHON_VERSION="python-3.5.2"
 STACK="cedar-14"
+PYTHON_EXE="/app/.heroku/python/bin/python"
+PIP_VERSION="9.0.1"
+SETUPTOOLS_VERSION="32.1.0"
 
 # Sanitizing environment variables.
 unset GIT_DIR PYTHONHOME PYTHONPATH
@@ -150,12 +153,12 @@ find .heroku/python/lib/python*/site-packages/ -name "*.pth" -print0 2> /dev/nul
 set -e
 
 # Store new artifacts in cache.
-rm -rf $CACHE_DIR/.heroku/python
-rm -rf $CACHE_DIR/.heroku/python-version
-rm -rf $CACHE_DIR/.heroku/python-stack
-rm -rf $CACHE_DIR/.heroku/vendor
-rm -rf $CACHE_DIR/.heroku/venv
-rm -rf $CACHE_DIR/.heroku/src
+# rm -rf $CACHE_DIR/.heroku/python
+# rm -rf $CACHE_DIR/.heroku/python-version
+# rm -rf $CACHE_DIR/.heroku/python-stack
+# rm -rf $CACHE_DIR/.heroku/vendor
+# rm -rf $CACHE_DIR/.heroku/venv
+# rm -rf $CACHE_DIR/.heroku/src
 
 mkdir -p $CACHE_DIR/.heroku
 cp -R .heroku/python $CACHE_DIR/.heroku/
