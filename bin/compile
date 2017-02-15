@@ -1,34 +1,15 @@
 #! /bin/bash
 #
 # compile
-# Copyright (C) 2016 dhilipsiva <dhilipsiva@gmail.com>
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
 #
 # Distributed under terms of the MIT license.
 #
 
-
-# Prepend proper path for virtualenv hackery. This will be deprecated soon.
-#!/usr/bin/env bash
-
-# The Heroku Python Buildpack. This script accepts parameters for a build
-# directory, a cache directory, and a directory for app environment variables.
-
-# Warning: there are a few hacks in this script to accommodate excellent builds
-# on Heroku. No guarantee for external compatibility is made. However,
-# everything should work fine outside of the Heroku environment, if the
-# environment is setup correctly.
-
-# Usage:
-#
-#     $ bin/compile <build-dir> <cache-dir> <env-path>
-
-# Fail fast and fail hard.
+# Fail fast and fail hard
 set -eo pipefail
 
-# Prepend proper path for virtualenv hackery. This will be deprecated soon.
-export PATH=:/usr/local/bin:$PATH
-
-# Paths.
+# Paths
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 ROOT_DIR=$(dirname $BIN_DIR)
 BUILD_DIR=$1
@@ -39,138 +20,3 @@ echo "========================================================================="
 echo BIN_DIR ROOT_DIR BUILD_DIR CACHE_DIR ENV_DIR
 echo $BIN_DIR $ROOT_DIR $BUILD_DIR $CACHE_DIR $ENV_DIR
 echo "========================================================================="
-
-# Static configurations for virtualenv caches.
-PYTHON_VERSION="python-3.5.2"
-STACK="cedar-14"
-PYTHON_EXE="/app/.heroku/python/bin/python"
-PIP_VERSION="9.0.1"
-SETUPTOOLS_VERSION="32.1.0"
-
-# Sanitizing environment variables.
-unset GIT_DIR PYTHONHOME PYTHONPATH
-unset RECEIVE_DATA RUN_KEY BUILD_INFO DEPLOY LOG_TOKEN DYNO
-unset CYTOKINE_LOG_FILE GEM_PATH
-
-# Setup buildpack instrumentation.
-
-# Syntax sugar.
-source $BIN_DIR/utils
-
-# we need to put a bunch of symlinks in there later
-mkdir -p /app/.heroku
-
-# Set up outputs under new context
-PROFILE_PATH="$BUILD_DIR/.profile.d/python.sh"
-EXPORT_PATH="$BIN_DIR/../export"
-GUNICORN_PROFILE_PATH="$BUILD_DIR/.profile.d/python.gunicorn.sh"
-
-# We'll need to send these statics to other scripts we `source`.
-export BUILD_DIR CACHE_DIR BIN_DIR PROFILE_PATH EXPORT_PATH PYTHON_VERSION
-
-# Prepend proper environment variables for Python use.
-export PATH=/app/.heroku/python/bin:/app/.heroku/vendor/bin:$PATH
-export PYTHONUNBUFFERED=1
-export LANG=en_US.UTF-8
-export C_INCLUDE_PATH=/app/.heroku/vendor/include:/app/.heroku/python/include:$C_INCLUDE_PATH
-export CPLUS_INCLUDE_PATH=/app/.heroku/vendor/include:/app/.heroku/python/include:$CPLUS_INCLUDE_PATH
-export LIBRARY_PATH=/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LIBRARY_PATH
-export LD_LIBRARY_PATH=/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LD_LIBRARY_PATH
-export PKG_CONFIG_PATH=/app/.heroku/vendor/lib/pkg-config:/app/.heroku/python/lib/pkg-config:$PKG_CONFIG_PATH
-
-# Switch to the repo's context.
-cd $BUILD_DIR
-
-# Stack fallback for non-declared caches.
-if [ -f $CACHE_DIR/.heroku/python-stack ]; then
-  CACHED_PYTHON_STACK=$(cat $CACHE_DIR/.heroku/python-stack)
-else
-  CACHED_PYTHON_STACK=$STACK
-fi
-
-# Prepare the cache.
-mkdir -p $CACHE_DIR
-
-# Restore old artifacts from the cache.
-mkdir -p .heroku
-
-cp -R $CACHE_DIR/.heroku/python .heroku/ &> /dev/null || true
-cp -R $CACHE_DIR/.heroku/python-stack .heroku/ &> /dev/null || true
-cp -R $CACHE_DIR/.heroku/python-version .heroku/ &> /dev/null || true
-cp -R $CACHE_DIR/.heroku/vendor .heroku/ &> /dev/null || true
-cp -R $CACHE_DIR/.heroku/venv .heroku/ &> /dev/null || true
-if [[ -d $CACHE_DIR/.heroku/src ]]; then
-  cp -R $CACHE_DIR/.heroku/src .heroku/ &> /dev/null || true
-fi
-
-
-mkdir -p $(dirname $PROFILE_PATH)
-mkdir -p /app/.heroku/src
-
-if [[ $BUILD_DIR != '/app' ]]; then
-    # python expects to reside in /app, so set up symlinks
-    # we will not remove these later so subsequent buildpacks can still invoke it
-    ln -nsf $BUILD_DIR/.heroku/python /app/.heroku/python
-    ln -nsf $BUILD_DIR/.heroku/vendor /app/.heroku/vendor
-    ln -nsf $BUILD_DIR/.heroku/venv /app/.heroku/venv
-    # Note: .heroku/src is copied in later.
-fi
-
-# Install Python.
-source $BIN_DIR/steps/python
-
-# Libffi support.
-source $BIN_DIR/steps/cryptography
-
-# Sanity check for setuptools/distribute.
-source $BIN_DIR/steps/setuptools
-
-# Uninstall removed dependencies with Pip.
-source $BIN_DIR/steps/pip-uninstall
-
-# Install dependencies with Pip (where the magic happens).
-source $BIN_DIR/steps/pip-install
-
-# Support for pip install -e.
-rm -fr $BUILD_DIR/.heroku/src
-deep-cp /app/.heroku/src $BUILD_DIR/.heroku/src
-
-# Django collectstatic support.
-sub-env $BIN_DIR/steps/collectstatic
-
-# Create .profile script for application runtime environment variables.
-set-env PATH '$HOME/.heroku/python/bin:$PATH'
-set-env PYTHONUNBUFFERED true
-set-env PYTHONHOME /app/.heroku/python
-set-env LIBRARY_PATH '/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LIBRARY_PATH'
-set-env LD_LIBRARY_PATH '/app/.heroku/vendor/lib:/app/.heroku/python/lib:$LD_LIBRARY_PATH'
-set-default-env LANG en_US.UTF-8
-set-default-env PYTHONHASHSEED random
-set-default-env PYTHONPATH /app/
-
-# Install sane-default script for $WEB_CONCURRENCY and $FORWARDED_ALLOW_IPS.
-cp $ROOT_DIR/vendor/python.gunicorn.sh $GUNICORN_PROFILE_PATH
-
-set +e
-# rewrite build dir in egg links to /app so things are found at runtime
-find .heroku/python/lib/python*/site-packages/ -name "*.egg-link" -print0 2> /dev/null | xargs -r -0 -n 1 sed -i -e "s#$(pwd)/#/app/#" &> /dev/null
-find .heroku/python/lib/python*/site-packages/ -name "*.pth" -print0 2> /dev/null | xargs -r -0 -n 1 sed -i -e "s#$(pwd)/#/app/#" &> /dev/null
-set -e
-
-Store new artifacts in cache.
-rm -rf $CACHE_DIR/.heroku/python
-rm -rf $CACHE_DIR/.heroku/python-version
-rm -rf $CACHE_DIR/.heroku/python-stack
-rm -rf $CACHE_DIR/.heroku/vendor
-rm -rf $CACHE_DIR/.heroku/venv
-rm -rf $CACHE_DIR/.heroku/src
-
-mkdir -p $CACHE_DIR/.heroku
-cp -R .heroku/python $CACHE_DIR/.heroku/
-cp -R .heroku/python-version $CACHE_DIR/.heroku/
-cp -R .heroku/python-stack $CACHE_DIR/.heroku/ &> /dev/null || true
-cp -R .heroku/vendor $CACHE_DIR/.heroku/ &> /dev/null || true
-cp -R .heroku/venv $CACHE_DIR/.heroku/ &> /dev/null || true
-if [[ -d .heroku/src ]]; then
-  cp -R .heroku/src $CACHE_DIR/.heroku/ &> /dev/null || true
-fi

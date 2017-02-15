@@ -1,15 +1,25 @@
 #! /bin/bash
 #
 # detect
-# Copyright (C) 2016 dhilipsiva <dhilipsiva@gmail.com>
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
 #
 # Distributed under terms of the MIT license.
 #
+
 
 set -eo pipefail
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+
+
+echo "
+===============================================================================
+BUILD_DIR CACHE_DIR
+$BUILD_DIR $CACHE_DIR
+===============================================================================
+"
+
 
 echo '
   _________.__                 .__                 __
