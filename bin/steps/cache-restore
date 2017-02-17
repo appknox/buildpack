@@ -1,0 +1,26 @@
+#! /bin/bash
+#
+# cache-check
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
+
+cp -R $SHERLOCK_CACHE $SHERLOCK_ENV
+
+# Check Stack
+if [ -f $CACHE_VERSION_STACK ]; then
+	if [[ $STACK != $(cat $CACHE_VERSION_STACK) ]]; then
+		BOOTSTRAP_PYTHON=$VALUE_TRUE
+		rm -rf $SHERLOCK_PYTHON
+	fi
+fi
+
+# Check Python
+if [ -f $CACHE_VERSION_PYTHON ]; then
+	if [[ $PYTHON_VERSION != $(cat $CACHE_VERSION_PYTHON) ]]; then
+		BOOTSTRAP_PYTHON=$VALUE_TRUE
+		rm -rf $SHERLOCK_PYTHON
+	fi
+fi
+

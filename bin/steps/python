@@ -1,0 +1,42 @@
+#! /bin/bash
+#
+# python
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
+
+
+
+if [[ $BOOTSTRAP_STACK == $VALUE_TRUE ]] || [[ $BOOTSTRAP_PYTHON == $VALUE_FALSE]]; then
+	puts-step "Installing $PYTHON_VERSION: $URL_PYTHON"
+
+	# Prepare destination directory.
+	mkdir -p $SHERLOCK_PYTHON
+	curl $URL_PYTHON -s | tar zxv -C $SHERLOCK_PYTHON &> /dev/null
+	FRESH_PYTHON=true
+
+fi
+
+# If Pip isn't up to date:
+if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]] ; then
+	WORKING_DIR=$(pwd)
+
+	TMPTARDIR=$(mktemp -d)
+	# trap "rm -rf $TMPTARDIR" RETURN
+
+	# Prepare it for the real world
+	puts-step "Installing Setuptools ($SETUPTOOLS_VERSION): $URL_SETUPTOOLS"
+	puts-step "Listing Setuptools"
+	ls $TMPTARDIR
+	curl $URL_SETUPTOOLS | tar zxf -C $TMPTARDIR
+	cd $TMPTARDIR/setuptools-$SETUPTOOLS_VERSION/
+	python setup.py install &> /dev/null
+	cd $WORKING_DIR
+	puts-step "Installing Pip ($PIP_VERSION): $URL_PIP"
+	curl $URL_PIP | tar zxf -C $TMPTARDIR
+	cd $TMPTARDIR/pip-$PIP_VERSION/
+	python setup.py install &> /dev/null
+	cd $WORKING_DIR
+
+fi

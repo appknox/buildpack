@@ -1,0 +1,16 @@
+#! /bin/bash
+#
+# cache-check
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
+
+
+# Store new artifacts in cache.
+rm -rf $SHERLOCK_CACHE
+cp -R $SHERLOCK_ENV $SHERLOCK_CACHE
+
+# Record for future reference.
+echo $PYTHON_VERSION > $CACHE_VERSION_PYTHON
+echo $STACK > $CACHE_VERSION_STACK

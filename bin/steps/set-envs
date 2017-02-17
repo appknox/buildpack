@@ -1,0 +1,19 @@
+#! /bin/bash
+#
+# set-envs
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
+
+
+# Create .profile script for application runtime environment variables.
+set-env PATH '$SHERLOCK_PYTHON_BIN:$PATH'
+set-env PYTHONUNBUFFERED $PYTHONUNBUFFERED
+set-env PYTHONHOME $SHERLOCK_PYTHON
+set-env LIBRARY_PATH '$SHERLOCK_VENDOR_LIB:$SHERLOCK_PYTHON_LIB:$LIBRARY_PATH'
+set-env LD_LIBRARY_PATH '$SHERLOCK_VENDOR_LIB:$SHERLOCK_PYTHON_LIB:$LD_LIBRARY_PATH'
+set-default-env LANG $LANG
+set-default-env PYTHONHASHSEED random
+# set-default-env PYTHONPATH /app/
+set-default-env PYTHONPATH $BUILD_DIR

@@ -1,0 +1,80 @@
+shopt -s extglob
+
+sed() { command sed -u "$@"; }
+
+# Syntax sugar.
+indent() {
+  sed "s/^/       /"
+}
+
+# Clean up pip output
+cleanup() {
+  sed -e 's/\.\.\.\+/.../g' | sed -e '/already satisfied/Id' | sed -e '/No files were found to uninstall/Id' | sed -e '/Overwriting/Id' | sed -e '/python executable/Id' | sed -e '/no previously-included files/Id'
+}
+
+# Buildpack Steps.
+puts-step() {
+  echo "-----> $@"
+}
+
+# Buildpack Warnings.
+puts-warn() {
+  echo " !     $@"
+}
+
+# Buildpack Commands.
+puts-cmd() {
+  echo "     $ $@"
+}
+
+# Usage: $ set-env key value
+set-env() {
+  echo "export $1=$2" >> $PROFILE_PATH
+  echo "export $1=$2" >> $EXPORT_PATH
+}
+
+# Usage: $ set-default-env key value
+set-default-env() {
+  echo "export $1=\${$1:-$2}" >> $PROFILE_PATH
+  echo "export $1=\${$1:-$2}" >> $EXPORT_PATH
+}
+
+# Does some serious copying.
+deep-cp() {
+  declare source="$1" target="$2"
+
+  mkdir -p "$target"
+
+  # cp doesn't like being called without source params,
+  # so make sure they expand to something first.
+  # subshell to avoid surprising caller with shopts.
+  (
+    shopt -s nullglob dotglob
+    set -- "$source"/!(tmp|.|..)
+    [[ $# == 0 ]] || cp -a "$@" "$target"
+  )
+}
+
+sub-env() {
+
+  WHITELIST=${2:-''}
+  BLACKLIST=${3:-'^(GIT_DIR|PYTHONHOME|LD_LIBRARY_PATH|LIBRARY_PATH|PATH)$'}
+
+  # Python-specific variables.
+  export PYHONHOME=$BUILD_DIR/.heroku/python
+  export PYTHONPATH=$BUILD_DIR/
+
+  (
+    if [ -d "$ENV_DIR" ]; then
+      for e in $(ls $ENV_DIR); do
+        echo "$e" | grep -E "$WHITELIST" | grep -qvE "$BLACKLIST" &&
+        export "$e=$(cat $ENV_DIR/$e)"
+        :
+      done
+    fi
+
+    $1
+
+  )
+}
+

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 #
 # compile
 # Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
@@ -6,17 +6,56 @@
 # Distributed under terms of the MIT license.
 #
 
-# Fail fast and fail hard
+# Usage:
+#
+#     $ bin/compile <build-dir> <cache-dir> <env-path>
+#
+# ./bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
+
+# Fail fast and fail hard.
 set -eo pipefail
 
-# Paths
-BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
-ROOT_DIR=$(dirname $BIN_DIR)
-BUILD_DIR=$1
-CACHE_DIR=$2
-ENV_DIR=$3
+# Paths.
+export BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+export ROOT_DIR=$(dirname $BIN_DIR)
+export BUILD_DIR=$1
+export CACHE_DIR=$2
+export ENV_DIR=$3
 
-echo "========================================================================="
-echo BIN_DIR ROOT_DIR BUILD_DIR CACHE_DIR ENV_DIR
-echo $BIN_DIR $ROOT_DIR $BUILD_DIR $CACHE_DIR $ENV_DIR
-echo "========================================================================="
+# Sanitizing environment variables.
+# unset GIT_DIR PYTHONHOME PYTHONPATH
+# unset RECEIVE_DATA RUN_KEY BUILD_INFO DEPLOY LOG_TOKEN DYNO
+
+# Switch to the repo's context.
+cd $BUILD_DIR
+
+# Load Variables
+source $BIN_DIR/constants
+
+# Syntax sugar.
+source $BIN_DIR/utils
+
+# Make Directories if it does not exist
+source $BIN_DIR/steps/make-dirs
+
+# Cache Restore
+source $BIN_DIR/steps/cache-restore
+
+# Install Python.
+source $BIN_DIR/steps/python
+
+# Libffi support.
+source $BIN_DIR/steps/cryptography
+
+# Install dependencies with Pip (where the magic happens).
+source $BIN_DIR/steps/pip-install
+
+# Django collectstatic support.
+# sub-env $BIN_DIR/steps/collectstatic  # Why `sub-env`???
+source $BIN_DIR/steps/collectstatic
+
+# Set Env variables
+source $BIN_DIR/steps/set-envs
+
+# Backup Cache
+source $BIN_DIR/steps/cache-backup
