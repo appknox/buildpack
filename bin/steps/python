@@ -8,7 +8,7 @@
 
 
 
-if [[ $BOOTSTRAP_STACK == $VALUE_TRUE ]] || [[ $BOOTSTRAP_PYTHON == $VALUE_FALSE]]; then
+if [[ $BOOTSTRAP_STACK == $VALUE_TRUE ]] || [[ $BOOTSTRAP_PYTHON == $VALUE_TRUE ]]; then
 	puts-step "Installing $PYTHON_VERSION: $URL_PYTHON"
 
 	# Prepare destination directory.
