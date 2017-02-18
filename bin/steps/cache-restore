@@ -23,4 +23,3 @@ if [ -f $CACHE_VERSION_PYTHON ]; then
 		rm -rf $SHERLOCK_PYTHON
 	fi
 fi
-
