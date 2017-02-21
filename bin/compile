@@ -13,7 +13,7 @@
 # ./bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 
 # Fail fast and fail hard.
-set -eo pipefail
+set -eox pipefail
 
 # Paths.
 export BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
@@ -21,6 +21,16 @@ export ROOT_DIR=$(dirname $BIN_DIR)
 export BUILD_DIR=$1
 export CACHE_DIR=$2
 export ENV_DIR=$3
+
+echo "
+===============================================================================
+BUILD_DIR $BIN_DIR
+ROOT_DIR $ROOT_DIR
+CACHE_DIR $CACHE_DIR
+ENV_DIR $ENV_DIR
+BIN_DIR $BIN_DIR
+===============================================================================
+"
 
 # Sanitizing environment variables.
 # unset GIT_DIR PYTHONHOME PYTHONPATH
@@ -35,11 +45,11 @@ source $BIN_DIR/constants
 # Syntax sugar.
 source $BIN_DIR/utils
 
-# Make Directories if it does not exist
-source $BIN_DIR/steps/make-dirs
-
 # Cache Restore
 source $BIN_DIR/steps/cache-restore
+
+# Make Directories if it does not exist
+source $BIN_DIR/steps/make-dirs
 
 # Install Python.
 source $BIN_DIR/steps/python

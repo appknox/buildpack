@@ -3,8 +3,8 @@ puts-cmd "pip install -r requirements.txt"
 
 # set +e
 # delete any existing egg links, to uninstall exisisting installations.
-find .heroku/python/lib/python*/site-packages/ -name "*.egg-link" -delete 2> /dev/null
-find .heroku/python/lib/python*/site-packages/ -name "*.pth" -print0 2> /dev/null | xargs -r -0 -n 1 sed -i -e "s#/app/#/$(pwd)/#" &> /dev/null
+find .heroku/python/lib/python*/site-packages/ -name "*.egg-link" -delete
+find .heroku/python/lib/python*/site-packages/ -name "*.pth" -print0 | xargs -r -0 -n 1 sed -i -e "s#/app/#/$(pwd)/#"
 # set -e
 
 # set +e

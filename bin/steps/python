@@ -6,37 +6,26 @@
 # Distributed under terms of the MIT license.
 #
 
-
+set -eov pipefail
 
 if [[ $BOOTSTRAP_STACK == $VALUE_TRUE ]] || [[ $BOOTSTRAP_PYTHON == $VALUE_TRUE ]]; then
 	puts-step "Installing $PYTHON_VERSION: $URL_PYTHON"
-
-	# Prepare destination directory.
-	mkdir -p $SHERLOCK_PYTHON
-	curl $URL_PYTHON -s | tar zxv -C $SHERLOCK_PYTHON &> /dev/null
+	curl $URL_PYTHON -s | tar zxv -C $SHERLOCK_PYTHON
 	FRESH_PYTHON=true
-
 fi
 
 # If Pip isn't up to date:
-if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]] ; then
+if [ "$FRESH_PYTHON" ] || [[ $(pip --version) != "$PIP_VERSION" ]] ; then
 	WORKING_DIR=$(pwd)
-
 	TMPTARDIR=$(mktemp -d)
-	# trap "rm -rf $TMPTARDIR" RETURN
+	trap "rm -rf $TMPTARDIR" RETURN
 
 	# Prepare it for the real world
-	puts-step "Installing Setuptools ($SETUPTOOLS_VERSION): $URL_SETUPTOOLS"
-	puts-step "Listing Setuptools"
-	ls $TMPTARDIR
-	curl $URL_SETUPTOOLS | tar zxf -C $TMPTARDIR
-	cd $TMPTARDIR/setuptools-$SETUPTOOLS_VERSION/
-	python setup.py install &> /dev/null
-	cd $WORKING_DIR
-	puts-step "Installing Pip ($PIP_VERSION): $URL_PIP"
-	curl $URL_PIP | tar zxf -C $TMPTARDIR
-	cd $TMPTARDIR/pip-$PIP_VERSION/
-	python setup.py install &> /dev/null
-	cd $WORKING_DIR
+	wget https://bootstrap.pypa.io/ez_setup.py -O - | python
 
+	puts-step "Installing Pip ($PIP_VERSION): $URL_PIP"
+	curl $URL_PIP | tar zxv -C $TMPTARDIR
+	cd $TMPTARDIR/pip-$PIP_VERSION/
+	python setup.py install
+	cd $WORKING_DIR
 fi

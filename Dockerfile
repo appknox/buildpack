@@ -17,4 +17,8 @@ RUN mkdir -p $ENV_DIR
 
 COPY . /app
 
+RUN /app/bin/detect $BUILD_DIR $CACHE_DIR
+
+RUN /app/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
+
 CMD /bin/bash

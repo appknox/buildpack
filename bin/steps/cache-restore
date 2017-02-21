@@ -6,20 +6,30 @@
 # Distributed under terms of the MIT license.
 #
 
+set +e
 cp -R $SHERLOCK_CACHE $SHERLOCK_ENV
+set -e
+
+function new-python() {
+	BOOTSTRAP_PYTHON=$VALUE_TRUE
+	rm -rf $SHERLOCK_PYTHON
+	rm -f $CACHE_VERSION_PYTHON
+}
 
 # Check Stack
 if [ -f $CACHE_VERSION_STACK ]; then
 	if [[ $STACK != $(cat $CACHE_VERSION_STACK) ]]; then
-		BOOTSTRAP_PYTHON=$VALUE_TRUE
-		rm -rf $SHERLOCK_PYTHON
+		new-python
 	fi
+else
+	new-python
 fi
 
 # Check Python
 if [ -f $CACHE_VERSION_PYTHON ]; then
 	if [[ $PYTHON_VERSION != $(cat $CACHE_VERSION_PYTHON) ]]; then
-		BOOTSTRAP_PYTHON=$VALUE_TRUE
-		rm -rf $SHERLOCK_PYTHON
+		new-python
 	fi
+else
+	new-python
 fi
