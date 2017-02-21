@@ -17,13 +17,13 @@ puts-cmd "pip install -r requirements.txt"
 # set -e
 
 # set +e
-/app/.heroku/python/bin/pip install -r $BUILD_DIR/requirements.txt --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir | tee $WARNINGS_LOG | cleanup | indent
+pip install -r $BUILD_DIR/requirements.txt --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir | tee $WARNINGS_LOG | cleanup | indent
 
 # Resolve conflicts in URITemplate & URITemplate.py
 # Just to make sure the `uninstall` command NEVER fails in the future
-# /app/.heroku/python/bin/pip install URITemplate URITemplate.py --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir 2>&1 | tee $WARNINGS_LOG | cleanup | indent
-# /app/.heroku/python/bin/pip uninstall URITemplate URITemplate.py -y --exists-action=w | cleanup | indent
-# /app/.heroku/python/bin/pip install URITemplate.py --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir 2>&1 | tee $WARNINGS_LOG | cleanup | indent
+# pip install URITemplate URITemplate.py --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir 2>&1 | tee $WARNINGS_LOG | cleanup | indent
+# pip uninstall URITemplate URITemplate.py -y --exists-action=w | cleanup | indent
+# pip install URITemplate.py --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir 2>&1 | tee $WARNINGS_LOG | cleanup | indent
 # set -e
 
 echo
