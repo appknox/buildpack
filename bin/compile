@@ -15,11 +15,7 @@
 # Fail fast and fail hard.
 set -exo pipefail
 
-lsb_release -a
-
-uname -a
-
-apt-get install python-pip -y
+sudo apt-get install python-pip -y
 
 exit 1
 
