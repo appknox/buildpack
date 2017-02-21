@@ -19,9 +19,9 @@ lsb_release -a
 
 uname -a
 
-apt-get install python-pip
+apt-get install python-pip -y
 
-exit
+exit 1
 
 # Paths.
 export BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
