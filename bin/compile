@@ -19,6 +19,8 @@ lsb_release -a
 
 uname -a
 
+apt-get install python-pip
+
 exit
 
 # Paths.
