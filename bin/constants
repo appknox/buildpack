@@ -11,11 +11,7 @@ export STACK="cedar-14"
 export VALUE_TRUE="true"
 export VALUE_FALSE="false"
 export PIP_VERSION="9.0.1"
-export SIX_VERSION="1.10.0"
 export ENV_NAME=".sherlock"
-export PACKAGING_VERSION="16.8"
-export PYPARSING_VERSION="2.1.10"
-export SETUPTOOLS_VERSION="34.2.0"
 export PYTHON_VERSION="python-3.6.0"
 
 # Sherlock Envs
@@ -72,9 +68,5 @@ export BOOTSTRAP_GETTEXT=$VALUE_FALSE
 
 # URLs
 export URL_PIP=https://storage.googleapis.com/sherlock-buildpack/pip.tar.gz
-export URL_SIX=https://storage.googleapis.com/sherlock-buildpack/six.tar.gz
 export URL_PYTHON=https://storage.googleapis.com/sherlock-buildpack/python.tar.gz
 export URL_LIBFFI=https://storage.googleapis.com/sherlock-buildpack/libffi.tar.gz
-export URL_PACKAGING=https://storage.googleapis.com/sherlock-buildpack/packaging.tar.gz
-export URL_SETUPTOOLS=https://storage.googleapis.com/sherlock-buildpack/setuptools.tar.gz
-export URL_PYPARSING=https://storage.googleapis.com/sherlock-buildpack/pyparsing.tar.gz
