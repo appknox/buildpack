@@ -18,7 +18,7 @@ python $MANAGE_FILE migrate
 
 puts-cmd "python $MANAGE_FILE collectstatic --noinput"
 # Run collectstatic, cleanup some of the noisy output.
-python $MANAGE_FILE collectstatic --noinput --traceback 2>&1 | sed '/^Post-processed/d;/^Copying/d;/^$/d' | indent
+python $MANAGE_FILE collectstatic --noinput --traceback | indent
 
 puts-cmd "python $MANAGE_FILE seed_db"
 python $MANAGE_FILE seed_db
