@@ -1,14 +1,11 @@
-#!/usr/bin/env bash
+#! /bin/bash
+#
+# cryptography
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
 
-# Syntax sugar.
-source $BIN_DIR/utils
-
-
-if [ ! -d ".heroku/vendor/lib/libffi-3.1" ]; then
-  echo "-----> Noticed cffi. Bootstrapping libffi."
-  # Download and extract libffi into target vendor directory.
-  curl $URL_LIBFFI -s | tar zxv -C .heroku/vendor
-fi
-
-export LIBFFI=$(pwd)/vendor
-
+puts-step "Bootstrapping libffi."
+# Download and extract libffi into target vendor directory.
+curl $URL_LIBFFI -s | tar zxv -C $LIBFFI

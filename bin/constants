@@ -36,6 +36,7 @@ export SHERLOCK_PYTHON_INCLUDE=$SHERLOCK_PYTHON/include
 export LANG=en_US.UTF-8
 export PYTHONUNBUFFERED=1
 export WARNINGS_LOG=$(mktemp)
+export LIBFFI=$SHERLOCK_VENDOR
 export EXPORT_PATH=$BIN_DIR/../export
 export PROFILE_DIR=$SHERLOCK_ENV/.profile.d
 export PROFILE_PATH=$PROFILE_DIR/python.sh
