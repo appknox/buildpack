@@ -19,7 +19,7 @@ puts-cmd "python $MANAGE_FILE migrate"
 python $MANAGE_FILE migrate
 
 puts-cmd "python $MANAGE_FILE collectstatic --noinput"
-# Run collectstatic, cleanup some of the noisy output.
+# Run collectstatic
 python $MANAGE_FILE collectstatic --noinput --traceback | indent
 
 puts-cmd "python $MANAGE_FILE seed_db"

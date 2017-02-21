@@ -17,7 +17,7 @@ puts-cmd "pip install -r requirements.txt"
 # set -e
 
 # set +e
-pip install -r $BUILD_DIR/requirements.txt --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir | tee $WARNINGS_LOG | cleanup | indent
+pip install -r $BUILD_DIR/requirements.txt --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir
 
 # Resolve conflicts in URITemplate & URITemplate.py
 # Just to make sure the `uninstall` command NEVER fails in the future
