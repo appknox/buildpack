@@ -1,10 +1,19 @@
+#! /bin/bash
+#
+# pip-install
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
+
+
 # Install dependencies with Pip.
 puts-cmd "pip install -r requirements.txt"
 
 # set +e
 # delete any existing egg links, to uninstall exisisting installations.
-find .heroku/python/lib/python*/site-packages/ -name "*.egg-link" -delete
-find .heroku/python/lib/python*/site-packages/ -name "*.pth" -print0 | xargs -r -0 -n 1 sed -i -e "s#/app/#/$(pwd)/#"
+# find .heroku/python/lib/python*/site-packages/ -name "*.egg-link" -delete
+# find .heroku/python/lib/python*/site-packages/ -name "*.pth" -print0 | xargs -r -0 -n 1 sed -i -e "s#/app/#/$(pwd)/#"
 # set -e
 
 # set +e

@@ -58,11 +58,11 @@ source $BIN_DIR/steps/python
 source $BIN_DIR/steps/cryptography
 
 # Install dependencies with Pip (where the magic happens).
-source $BIN_DIR/steps/pip-install
+# source $BIN_DIR/steps/pip-install
 
 # Django collectstatic support.
 # sub-env $BIN_DIR/steps/collectstatic  # Why `sub-env`???
-source $BIN_DIR/steps/collectstatic
+source $BIN_DIR/steps/django
 
 # Set Env variables
 source $BIN_DIR/steps/set-envs
