@@ -15,6 +15,12 @@
 # Fail fast and fail hard.
 set -exo pipefail
 
+lsb_release -a
+
+uname -a
+
+exit
+
 # Paths.
 export BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 export ROOT_DIR=$(dirname $BIN_DIR)
