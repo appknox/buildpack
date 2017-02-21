@@ -13,7 +13,7 @@
 # ./bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 
 # Fail fast and fail hard.
-set -eo pipefail
+set -exo pipefail
 
 # Paths.
 export BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
