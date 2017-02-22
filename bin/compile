@@ -12,13 +12,6 @@
 #
 # ./bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 
-# Fail fast and fail hard.
-set -exo pipefail
-
-sudo apt-get install python-pip -y
-
-exit 1
-
 # Paths.
 export BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 export ROOT_DIR=$(dirname $BIN_DIR)
