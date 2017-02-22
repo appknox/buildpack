@@ -12,7 +12,6 @@ export VALUE_TRUE="true"
 export VALUE_FALSE="false"
 export PIP_VERSION="9.0.1"
 export ENV_NAME=".sherlock"
-export PIP_REQUIRE_VIRTUALENV="n"
 export PYTHON_VERSION="python-3.6.0"
 
 # Sherlock Envs
