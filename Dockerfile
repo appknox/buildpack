@@ -19,6 +19,7 @@ RUN mkdir -p /app/builds/
 COPY . /app
 
 COPY requirements.txt /app/builds/requirements.txt
+COPY Aptfile /app/builds/Aptfile
 
 RUN /app/bin/detect $BUILD_DIR $CACHE_DIR
 

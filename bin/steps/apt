@@ -1,0 +1,25 @@
+#! /bin/bash
+#
+# apt
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
+
+puts-cmd "Updating apt caches"
+apt-get "$APT_OPTIONS" update | indent
+
+while IFS= read -r PACKAGE
+do
+    PACKAGE_NAME=$(basename "$PACKAGE" .deb)
+    PACKAGE_FILE=$SHERLOCK_APT_ARCHIVES/$PACKAGE_NAME.deb
+
+    puts-cmd  "Fetching $PACKAGE"
+    curl -s -L -z "$PACKAGE_FILE" -o "$PACKAGE_FILE" "$PACKAGE" 2>&1 | indent
+done < <(grep -v '^ *#' < "$APTFILE")
+
+for DEB in $SHERLOCK_APT_ARCHIVES/*.deb
+do
+  puts-cmd  "Installing $(basename "$DEB")"
+  dpkg -x "$DEB" "$SHERLOCK_APT"
+done

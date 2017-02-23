@@ -6,14 +6,18 @@
 # Distributed under terms of the MIT license.
 #
 
-
 # Create .profile script for application runtime environment variables.
-set-env PATH '$SHERLOCK_PYTHON_BIN:$PATH'
-set-env PYTHONUNBUFFERED $PYTHONUNBUFFERED
-set-env PYTHONHOME $SHERLOCK_PYTHON
-set-env LIBRARY_PATH '$SHERLOCK_VENDOR_LIB:$SHERLOCK_PYTHON_LIB:$LIBRARY_PATH'
-set-env LD_LIBRARY_PATH '$SHERLOCK_VENDOR_LIB:$SHERLOCK_PYTHON_LIB:$LD_LIBRARY_PATH'
-set-default-env LANG $LANG
-set-default-env PYTHONHASHSEED random
+set-env PATH "$PATH"
+set-env CPATH "$CPATH"
+set-env CPPATH "$CPPATH"
+set-env LIBRARY_PATH "$LIBRARY_PATH"
+set-env INCLUDE_PATH "$INCLUDE_PATH"
+set-env PYTHONHOME "$SHERLOCK_PYTHON"
+set-env LD_LIBRARY_PATH "$LD_LIBRARY_PATH"
+set-env PKG_CONFIG_PATH "$PKG_CONFIG_PATH"
+set-env PYTHONUNBUFFERED "$PYTHONUNBUFFERED"
+
+set-default-env LANG "$LANG"
 # set-default-env PYTHONPATH /app/
-set-default-env PYTHONPATH $BUILD_DIR
+set-default-env PYTHONHASHSEED random
+set-default-env PYTHONPATH "$BUILD_DIR"

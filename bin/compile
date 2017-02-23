@@ -12,6 +12,8 @@
 #
 # ./bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 
+set -exo pipefail
+
 # Paths.
 export BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 export ROOT_DIR=$(dirname $BIN_DIR)
@@ -48,11 +50,11 @@ source $BIN_DIR/steps/cache-restore
 # Make Directories if it does not exist
 source $BIN_DIR/steps/make-dirs
 
+# Install APT Dependencies.
+source $BIN_DIR/steps/apt
+
 # Install Python.
 source $BIN_DIR/steps/python
-
-# Libffi support.
-source $BIN_DIR/steps/cryptography
 
 # Install dependencies with Pip (where the magic happens).
 source $BIN_DIR/steps/pip-install

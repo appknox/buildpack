@@ -7,4 +7,6 @@
 #
 
 
-echo "DONE!"
+cat <<EOF
+---
+EOF

@@ -7,10 +7,13 @@
 #
 
 
-mkdir -p $PROFILE_DIR
-mkdir -p $SHERLOCK_ENV
-mkdir -p $SHERLOCK_CACHE
-mkdir -p $SHERLOCK_PYTHON
-mkdir -p $SHERLOCK_VENDOR
-mkdir -p $SHERLOCK_ENV_SRC
-mkdir -p $SHERLOCK_VERSIONS
+mkdir -p "$PROFILE_DIR"
+mkdir -p "$SHERLOCK_ENV"
+mkdir -p "$SHERLOCK_APT"
+mkdir -p "$SHERLOCK_CACHE"
+mkdir -p "$SHERLOCK_PYTHON"
+mkdir -p "$SHERLOCK_VENDOR"
+mkdir -p "$SHERLOCK_ENV_SRC"
+mkdir -p "$SHERLOCK_VERSIONS"
+mkdir -p "$SHERLOCK_APT_LIST_PARTIAL"
+mkdir -p "$SHERLOCK_APT_ARCHIVES_PARTIAL"
