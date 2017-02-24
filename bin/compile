@@ -36,35 +36,38 @@ BIN_DIR $BIN_DIR
 # unset RECEIVE_DATA RUN_KEY BUILD_INFO DEPLOY LOG_TOKEN DYNO
 
 # Switch to the repo's context.
-cd $BUILD_DIR
+cd "$BUILD_DIR"
 
 # Load Variables
-source $BIN_DIR/constants
+source "$BIN_DIR/constants"
 
 # Syntax sugar.
-source $BIN_DIR/utils
+source "$BIN_DIR/utils"
 
 # Cache Restore
-source $BIN_DIR/steps/cache-restore
+source "$BIN_DIR/steps/cache-restore"
 
 # Make Directories if it does not exist
-source $BIN_DIR/steps/make-dirs
+source "$BIN_DIR/steps/make-dirs"
 
 # Install APT Dependencies.
-source $BIN_DIR/steps/apt
+source "$BIN_DIR/steps/apt"
+
+# Install gettext Dependencies.
+source "$BIN_DIR/steps/gettext"
 
 # Install Python.
-source $BIN_DIR/steps/python
+source "$BIN_DIR/steps/python"
 
 # Install dependencies with Pip (where the magic happens).
-source $BIN_DIR/steps/pip-install
+source "$BIN_DIR/steps/pip-install"
 
 # Django collectstatic support.
 # sub-env $BIN_DIR/steps/collectstatic  # Why `sub-env`???
-source $BIN_DIR/steps/django
+source "$BIN_DIR/steps/django"
 
 # Set Env variables
-source $BIN_DIR/steps/set-envs
+source "$BIN_DIR/steps/set-envs"
 
 # Backup Cache
-source $BIN_DIR/steps/cache-backup
+source "$BIN_DIR/steps/cache-backup"

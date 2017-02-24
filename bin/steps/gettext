@@ -1,0 +1,11 @@
+#! /bin/bash
+#
+# gettext
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
+
+puts-cmd "Installing gettext..."
+
+curl --silent --max-time 60 --location "$URL_GETTEXT" | tar xz -C "$SHERLOCK_ENV"
