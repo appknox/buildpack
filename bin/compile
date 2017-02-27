@@ -59,6 +59,18 @@ source "$BIN_DIR/steps/gettext"
 # Install Python.
 source "$BIN_DIR/steps/python"
 
+# Install pango.
+source "$BIN_DIR/steps/pango"
+
+# Install Crypto.
+source "$BIN_DIR/steps/cryptography"
+
+# Install Gettext.
+source "$BIN_DIR/steps/gettext"
+
+# Install Libjpeg.
+source "$BIN_DIR/steps/libjpeg"
+
 # Install dependencies with Pip (where the magic happens).
 source "$BIN_DIR/steps/pip-install"
 
