@@ -1,0 +1,41 @@
+#! /bin/bash
+#
+# pango
+# Copyright (C) 2017 dhilipsiva <dhilipsiva@gmail.com>
+#
+# Distributed under terms of the MIT license.
+#
+
+function vendor() {
+  binary="$1"
+  path="$2"
+
+  echo "Fetching $binary" | indent
+  mkdir -p $path
+  curl $binary -s -o - | tar xz -C $path -f -
+
+  if [ -d "$path/bin" ]; then
+    export PATH=$path/bin:$PATH
+  fi
+
+  if [ -d "$path/lib/pkgconfig" ]; then
+    echo "Found $path/lib/pkgconfig"
+    # pkg-config should handle compiler options (if used)
+    export PKG_CONFIG_PATH="$path/lib/pkgconfig:$PKG_CONFIG_PATH"
+    echo $PKG_CONFIG_PATH
+  fi
+
+  # standard paths
+  export CPPPATH="$path/include:$CPPPATH"
+  export CPATH="$path/include:$CPATH"
+  export LIBRARY_PATH="$path/lib:$LIBRARY_PATH"
+
+  export LD_LIBRARY_PATH="$path/lib:$LD_LIBRARY_PATH"
+}
+
+echo "-----> Vendoring binaries"
+vendor "$URL_CAIRO"  "$BUILD_DIR/vendor/cairo"
+vendor "$URL_PANGO"  "$BUILD_DIR/vendor/pango"
+vendor "$URL_PIXMAN"  "$BUILD_DIR/vendor/pixman-1"
+vendor "$URL_FREETYPE" "$BUILD_DIR/vendor/freetype"
+vendor "$URL_PIXBUF" "$BUILD_DIR/vendor/gdk-pixbuf"

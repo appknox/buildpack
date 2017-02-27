@@ -98,7 +98,12 @@ export BOOTSTRAP_GETTEXT=$VALUE_FALSE
 # URLs
 export URL_PIP=https://storage.googleapis.com/sherlock-buildpack/pip.tar.gz
 export URL_FONTS=https://storage.googleapis.com/sherlock-buildpack/fonts.tar.gz
+export URL_CAIRO=https://storage.googleapis.com/sherlock-buildpack/cairo.tar.gz
+export URL_PANGO=https://storage.googleapis.com/sherlock-buildpack/pango.tar.gz
+export URL_PIXBUF=https://storage.googleapis.com/sherlock-buildpack/pixbuf.tar.gz
+export URL_PIXMAN=https://storage.googleapis.com/sherlock-buildpack/pixman.tar.gz
 export URL_PYTHON=https://storage.googleapis.com/sherlock-buildpack/python.tar.gz
 export URL_LIBFFI=https://storage.googleapis.com/sherlock-buildpack/libffi.tar.gz
 export URL_GETTEXT=https://storage.googleapis.com/sherlock-buildpack/gettext.tar.gz
 export URL_LIBJPEG=https://storage.googleapis.com/sherlock-buildpack/libjpeg.tar.gz
+export URL_FREETYPE=https://storage.googleapis.com/sherlock-buildpack/freetype.tar.gz
