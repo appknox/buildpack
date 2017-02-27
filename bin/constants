@@ -97,6 +97,7 @@ export BOOTSTRAP_GETTEXT=$VALUE_FALSE
 
 # URLs
 export URL_PIP=https://storage.googleapis.com/sherlock-buildpack/pip.tar.gz
+export URL_FONTS=https://storage.googleapis.com/sherlock-buildpack/fonts.tar.gz
 export URL_PYTHON=https://storage.googleapis.com/sherlock-buildpack/python.tar.gz
 export URL_LIBFFI=https://storage.googleapis.com/sherlock-buildpack/libffi.tar.gz
 export URL_GETTEXT=https://storage.googleapis.com/sherlock-buildpack/gettext.tar.gz
