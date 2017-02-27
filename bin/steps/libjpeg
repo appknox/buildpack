@@ -9,4 +9,4 @@
 puts-cmd "libjpeg..."
 
 cd "$BUILD_DIR"
-curl -L --silent "$DOWNLOAD_URL" | -C "$SHERLOCK_ENV"
+curl --silent --max-time 60 --location "$URL_LIBJPEG" | tar xz -C "$SHERLOCK_ENV"
