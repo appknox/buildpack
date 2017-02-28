@@ -14,9 +14,7 @@ apt-get $APT_OPTIONS update | indent
 
 while IFS= read -r PACKAGE
 do
-	PACKAGE_NAME=$(basename "$PACKAGE" .deb)
-	PACKAGE_FILE=$SHERLOCK_APT_ARCHIVES/$PACKAGE_NAME.deb
+	puts-cmd "Fetching .debs for $PACKAGE"
+	apt-get $APT_OPTIONS -y --force-yes -d install --reinstall "$PACKAGE" | indent
 
-	puts-cmd  "Fetching $PACKAGE"
-	curl -s -L -z "$PACKAGE_FILE" -o "$PACKAGE_FILE" "$PACKAGE" 2>&1 | indent
 done < <(grep -v '^ *#' < "$APTFILE")
