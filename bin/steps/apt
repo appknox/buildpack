@@ -7,7 +7,7 @@
 #
 
 puts-cmd "Updating apt caches"
-apt-get "$APT_OPTIONS" update | indent
+# apt-get "$APT_OPTIONS" update | indent
 
 while IFS= read -r PACKAGE
 do
