@@ -13,9 +13,6 @@
 
 cd $BUILD_DIR
 
-echo pango
-which pango
-
 export MANAGE_FILE=manage.py
 puts-cmd "python $MANAGE_FILE migrate"
 python $MANAGE_FILE migrate

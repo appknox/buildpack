@@ -8,7 +8,7 @@
 
 if [[ $BOOTSTRAP_STACK == $VALUE_TRUE ]] || [[ $BOOTSTRAP_PYTHON == $VALUE_TRUE ]]; then
 	puts-step "Installing $PYTHON_VERSION: $URL_PYTHON"
-	curl $URL_PYTHON -s | tar zxv -C $SHERLOCK_PYTHON
+	curl $URL_PYTHON -s | tar zx -C $SHERLOCK_PYTHON
 	FRESH_PYTHON=true
 fi
 
@@ -22,7 +22,7 @@ if [ "$FRESH_PYTHON" ] || [[ $(pip --version) != "$PIP_VERSION" ]] ; then
 	wget https://bootstrap.pypa.io/ez_setup.py -O - | python
 
 	puts-step "Installing Pip ($PIP_VERSION): $URL_PIP"
-	curl $URL_PIP | tar zxv -C $TMPTARDIR
+	curl $URL_PIP | tar zx -C $TMPTARDIR
 	cd $TMPTARDIR/pip-$PIP_VERSION/
 	python setup.py install
 	cd $WORKING_DIR
