@@ -8,8 +8,6 @@
 
 puts-cmd "Updating apt caches"
 
-ls -R $SHERLOCK_APT
-
 apt-get $APT_OPTIONS update | indent
 
 while IFS= read -r PACKAGE

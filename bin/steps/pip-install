@@ -17,8 +17,6 @@ set +e
 set -e
 
 # set +e
-env
-ls $(pkg-config --variable pc_path pkg-config | tr ':' ' ')
 PIP_VERSION="n" pip install -r $BUILD_DIR/requirements.txt --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir
 
 # Resolve conflicts in URITemplate & URITemplate.py
