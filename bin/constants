@@ -20,8 +20,7 @@ export APTFILE=$BUILD_DIR/Aptfile
 export PYTHON_VERSION="python-3.6.0"
 
 # Sherlock Envs
-# export SHERLOCK_ENV=$BUILD_DIR/$ENV_NAME
-export SHERLOCK_ENV=$ENV_DIR/$ENV_NAME
+export SHERLOCK_ENV=$BUILD_DIR/$ENV_NAME
 export SHERLOCK_ENV_SRC=$SHERLOCK_ENV/src
 export SHERLOCK_CACHE=$CACHE_DIR/$ENV_NAME
 export SHERLOCK_VERSIONS=$SHERLOCK_ENV/versions
@@ -79,9 +78,9 @@ export CACHE_VERSION_GETTEXT=$SHERLOCK_VERSIONS/gettext
 export CACHE_VERSION_LIBJPEG=$SHERLOCK_VERSIONS/libjpeg
 
 # Configs for Aptfiles
+export INCLUDE_PATH="$SHERLOCK_APT_INCLUDE:$INCLUDE_PATH"
 export CPATH="$INCLUDE_PATH"
 export CPPPATH="$INCLUDE_PATH"
-export INCLUDE_PATH="$SHERLOCK_APT_INCLUDE:$INCLUDE_PATH"
 export C_INCLUDE_PATH=$SHERLOCK_VENDOR_INCLUDE:$SHERLOCK_PYTHON_INCLUDE:$C_INCLUDE_PATH
 export CPLUS_INCLUDE_PATH=$SHERLOCK_VENDOR_INCLUDE:$SHERLOCK_PYTHON_INCLUDE:$CPLUS_INCLUDE_PATH
 export PATH=$SHERLOCK_GETTEXT_BIN:$SHERLOCK_APT_BIN:$SHERLOCK_PYTHON_BIN:$SHERLOCK_VENDOR_BIN:$PATH
@@ -109,3 +108,4 @@ export URL_LIBFFI=https://storage.googleapis.com/sherlock-buildpack/libffi.tar.g
 export URL_GETTEXT=https://storage.googleapis.com/sherlock-buildpack/gettext.tar.gz
 export URL_LIBJPEG=https://storage.googleapis.com/sherlock-buildpack/libjpeg.tar.gz
 export URL_FREETYPE=https://storage.googleapis.com/sherlock-buildpack/freetype.tar.gz
+export URL_SHERLOCK=https://storage.googleapis.com/sherlock-buildpack/sherlock.tar.gz
