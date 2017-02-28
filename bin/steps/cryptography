@@ -8,5 +8,5 @@
 
 puts-step "Bootstrapping libffi."
 # Download and extract libffi into target vendor directory.
-curl $URL_LIBFFI -s | tar zxv -C $LIBFFI
-ls $LIBFFI
+curl $URL_LIBFFI -s | tar zxv -C $SHERLOCK_LIBFFI
+ls  $SHERLOCK_LIBFFI
