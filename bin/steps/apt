@@ -7,7 +7,8 @@
 #
 
 puts-cmd "Updating apt caches"
-apt-get "$APT_OPTIONS" update | indent
+# apt-get "$APT_OPTIONS" update | indent
+apt-get update | indent
 
 while IFS= read -r PACKAGE
 do
@@ -19,7 +20,8 @@ do
 		curl -s -L -z "$PACKAGE_FILE" -o "$PACKAGE_FILE" "$PACKAGE" 2>&1 | indent
 	else
 		topic "Fetching .debs for $PACKAGE"
-		apt-get "$APT_OPTIONS" -y --force-yes -d install --reinstall "$PACKAGE" | indent
+		# apt-get "$APT_OPTIONS" -y --force-yes -d install --reinstall "$PACKAGE" | indent
+		apt-get -y --force-yes -d install --reinstall "$PACKAGE" | indent
 	fi
 
 
