@@ -15,6 +15,6 @@ apt-get $APT_OPTIONS update | indent
 while IFS= read -r PACKAGE
 do
 	puts-cmd "Fetching .debs for $PACKAGE"
-	apt-get $APT_OPTIONS -y --force-yes -d install --reinstall "$PACKAGE" | indent
+	apt-get $APT_OPTIONS -y --force-yes install --reinstall "$PACKAGE" | indent
 
 done < <(grep -v '^ *#' < "$APTFILE")
