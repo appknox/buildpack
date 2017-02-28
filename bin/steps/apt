@@ -20,6 +20,6 @@ do
 done < <(grep -v '^ *#' < "$APTFILE")
 
 for DEB in $(ls -1 $SHERLOCK_APT_ARCHIVES/*.deb); do
-  topic "Installing $(basename $DEB)"
+  puts-cmd "Installing $(basename $DEB)"
   dpkg -x $DEB $SHERLOCK_APT
 done
