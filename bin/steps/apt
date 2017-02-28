@@ -8,6 +8,7 @@
 
 puts-cmd "Updating apt caches"
 # apt-get "$APT_OPTIONS" update | indent
+whoami
 apt-get update | indent
 
 while IFS= read -r PACKAGE
