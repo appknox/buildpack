@@ -18,6 +18,7 @@ set -e
 
 # set +e
 env
+find "$SHERLOCK_ENV"
 PIP_VERSION="n" pip install -r $BUILD_DIR/requirements.txt --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir
 
 # Resolve conflicts in URITemplate & URITemplate.py
