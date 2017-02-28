@@ -7,19 +7,27 @@
 #
 
 puts-cmd "Updating apt caches"
-# apt-get "$APT_OPTIONS" update | indent
+apt-get "$APT_OPTIONS" update | indent
 
 while IFS= read -r PACKAGE
 do
-    PACKAGE_NAME=$(basename "$PACKAGE" .deb)
-    PACKAGE_FILE=$SHERLOCK_APT_ARCHIVES/$PACKAGE_NAME.deb
+	if [[ $PACKAGE == *deb ]]; then
+		PACKAGE_NAME=$(basename "$PACKAGE" .deb)
+		PACKAGE_FILE=$SHERLOCK_APT_ARCHIVES/$PACKAGE_NAME.deb
 
-    puts-cmd  "Fetching $PACKAGE"
-    curl -s -L -z "$PACKAGE_FILE" -o "$PACKAGE_FILE" "$PACKAGE" 2>&1 | indent
+		puts-cmd  "Fetching $PACKAGE"
+		curl -s -L -z "$PACKAGE_FILE" -o "$PACKAGE_FILE" "$PACKAGE" 2>&1 | indent
+	else
+		topic "Fetching .debs for $PACKAGE"
+		apt-get "$APT_OPTIONS" -y --force-yes -d install --reinstall "$PACKAGE" | indent
+	fi
+
+
+
 done < <(grep -v '^ *#' < "$APTFILE")
 
 for DEB in $SHERLOCK_APT_ARCHIVES/*.deb
 do
-  puts-cmd  "Installing $(basename "$DEB")"
-  dpkg -x "$DEB" "$SHERLOCK_APT"
+	puts-cmd  "Installing $(basename "$DEB")"
+	dpkg -x "$DEB" "$SHERLOCK_APT"
 done
