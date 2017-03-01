@@ -1,4 +1,4 @@
-FROM heroku/python
+FROM quay.io/deis/builder:v2.7.1
 
 WORKDIR /app
 ENV WORKSPACE_DIR=/app/builds
@@ -9,7 +9,6 @@ ENV ENV_DIR=/app/env
 RUN mkdir -p $BUILD_DIR
 RUN mkdir -p $CACHE_DIR
 RUN mkdir -p $ENV_DIR
-RUN mkdir -p /app/builds/
 
 # RUN apt-get update && apt-get install -y python-pip
 

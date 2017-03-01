@@ -19,7 +19,7 @@ if [ "$FRESH_PYTHON" ] || [[ $(pip --version) != "$PIP_VERSION" ]] ; then
 	trap "rm -rf $TMPTARDIR" RETURN
 
 	# Prepare it for the real world
-	wget https://bootstrap.pypa.io/ez_setup.py -O - | python
+	curl https://bootstrap.pypa.io/ez_setup.py | python
 
 	puts-step "Installing Pip ($PIP_VERSION): $URL_PIP"
 	curl $URL_PIP | tar zx -C $TMPTARDIR

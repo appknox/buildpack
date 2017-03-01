@@ -1,4 +1,2 @@
-libffi-dev
-libssl-dev
 pandoc
 shared-mime-info
