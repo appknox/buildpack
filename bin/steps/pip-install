@@ -6,10 +6,6 @@
 # Distributed under terms of the MIT license.
 #
 
-ls $(echo $PKG_CONFIG_PATH | tr ':' ' ')
-ls $(echo $LD_LIBRARY_PATH| tr ':' ' ')
-ls $(echo $LIBRARY_PATH| tr ':' ' ')
-
 # Install dependencies with Pip.
 puts-cmd "pip install -r requirements.txt"
 
@@ -20,7 +16,7 @@ set +e
 set -e
 
 # set +e
-PIP_VERSION="n" LDFLAGS="-lffi" pip install -r $BUILD_DIR/requirements.txt --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir
+PIP_VERSION="n" CFLAGS="$CFLAGS -I$SHERLOCK_APT_INCLUDE/x86_64-linux-gnu" pip install -r $BUILD_DIR/requirements.txt --exists-action=w --src=$SHERLOCK_ENV_SRC --disable-pip-version-check --no-cache-dir
 
 # Resolve conflicts in URITemplate & URITemplate.py
 # Just to make sure the `uninstall` command NEVER fails in the future
