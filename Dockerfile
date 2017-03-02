@@ -1,4 +1,4 @@
-FROM quay.io/deis/builder:v2.7.1
+FROM quay.io/deis/slugbuilder:v2.4.8
 
 WORKDIR /app
 ENV WORKSPACE_DIR=/app/builds
