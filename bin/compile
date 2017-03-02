@@ -63,7 +63,7 @@ source "$BIN_DIR/steps/python"
 source "$BIN_DIR/steps/pango"
 
 # Install Crypto.
-#source "$BIN_DIR/steps/cryptography"
+source "$BIN_DIR/steps/cryptography"
 
 # Install Gettext.
 source "$BIN_DIR/steps/gettext"
