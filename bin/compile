@@ -76,7 +76,7 @@ source "$BIN_DIR/steps/pip-install"
 
 # Django collectstatic support.
 # sub-env $BIN_DIR/steps/collectstatic  # Why `sub-env`???
-source "$BIN_DIR/steps/django"
+sub-env "$BIN_DIR/steps/django"
 
 # Set Env variables
 source "$BIN_DIR/steps/set-envs"
