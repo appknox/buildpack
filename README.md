@@ -1,8 +1,8 @@
 # buildpack
-A Deis / Heroku buildpack for running sherlock
 
+A Deis/Heroku buildpack for running sherlock
 
-# Code borrowed from:
+## Code borrowed from:
 
 * https://github.com/heroku/heroku-buildpack-python
 * https://github.com/AriesApp/heroku-buildpack-noto-cjk-fonts
