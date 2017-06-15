@@ -13,6 +13,9 @@
 
 cd $BUILD_DIR
 
+puts-cmd "python $MANAGE_FILE db_backup"
+python $MANAGE_FILE db_backup
+
 export MANAGE_FILE=manage.py
 puts-cmd "python $MANAGE_FILE migrate"
 python $MANAGE_FILE migrate
