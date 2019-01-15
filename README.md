@@ -1,3 +1,7 @@
+# Deprecated
+
+This is now archived repo
+
 # buildpack
 
 A Deis/Heroku buildpack for running sherlock
